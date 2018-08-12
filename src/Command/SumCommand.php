@@ -6,6 +6,7 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Input\InputArgument;
+use Symfony\Component\Console\Formatter\OutputFormatterStyle;
 use Yknnv\Sum;
 
 class SumCommand extends Command
@@ -24,6 +25,12 @@ class SumCommand extends Command
 		$b = $input->getArgument('b');
 		$sum = new Sum();
 		$res = $sum->sum($a, $b);
-		$output->writeln($res);
+		$this->setStyle($output);
+		$output->writeln("<style>".$res."</style>");
+	}
+	
+	protected function setStyle(&$output){
+		$style = new OutputFormatterStyle('black', 'white', array('bold', 'blink'));
+		$output->getFormatter()->setStyle('style', $style);
 	}
 }
